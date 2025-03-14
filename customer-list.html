@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List | BankCRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f7fa;
+        }
+        
+        .sidebar {
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .nav-link {
+            color: #495057;
+            border-radius: 0;
+            padding: 0.8rem 1rem;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .search-bar {
+            border-radius: 20px;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 1rem;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .customer-row {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .customer-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .table th {
+            border-top: none;
+            border-bottom-width: 1px;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-inactive {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .status-pending {
+            background-color: #fff8e1;
+            color: #f57f17;
+        }
+        
+        .filter-chip {
+            display: inline-block;
+            padding: 5px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .filter-chip:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .filter-chip.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar d-flex flex-column p-3">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                    <span class="fs-4 fw-bold text-primary">BankCRM</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="customer-list.html" class="nav-link active">
+                            <i class="bi bi-people me-2"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="opportunity-pipeline.html" class="nav-link">
+                            <i class="bi bi-kanban me-2"></i> Opportunities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar-tasks.html" class="nav-link">
+                            <i class="bi bi-calendar-check me-2"></i> Calendar & Tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="documents.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text me-2"></i> Documents
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="nav-link">
+                            <i class="bi bi-bar-chart me-2"></i> Reports
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle me-2">
+                        <strong>Sarah Johnson</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <nav class="navbar navbar-expand-lg mb-4 rounded">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Customers</h4>
+                        <div class="d-flex">
+                            <div class="input-group me-3">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input type="text" class="form-control search-bar border-start-0" placeholder="Search customers...">
+                            </div>
+                            <button class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-2"></i> Add Customer
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="mb-3">Filters</h5>
+                        <div class="mb-3">
+                            <div class="mb-2 text-secondary small">Customer Type</div>
+                            <div>
+                                <span class="filter-chip active">All Types</span>
+                                <span class="filter-chip">Individual</span>
+                                <span class="filter-chip">Business</span>
+                                <span class="filter-chip">Trust</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="mb-2 text-secondary small">Relationship Manager</div>
+                            <div>
+                                <span class="filter-chip active">All Managers</span>
+                                <span class="filter-chip">Sarah Johnson</span>
+                                <span class="filter-chip">Michael Roberts</span>
+                                <span class="filter-chip">Jennifer Thompson</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="mb-2 text-secondary small">Status</div>
+                            <div>
+                                <span class="filter-chip active">All Status</span>
+                                <span class="filter-chip">Active</span>
+                                <span class="filter-chip">Inactive</span>
+                                <span class="filter-chip">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Type</th>
+                                        <th>Relationship Manager</th>
+                                        <th>Contact Info</th>
+                                        <th>Total Value</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="customer-row" onclick="window.location='customer-profile.html'">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3" style="background-color: #bbdefb; display: flex; align-items: center; justify-content: center;">
+                                                    <span>RS</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">Robert Smith</h6>
+                                                    <small class="text-muted">ID: CS-1001</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Individual</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>
+                                            <div>robert.smith@example.com</div>
+                                            <small class="text-muted">(555) 123-4567</small>
+                                        </td>
+                                        <td>$1,250,000</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdown1">
+                                                    <li><a class="dropdown-item" href="customer-profile.html">View Profile</a></li>
+                                                    <li><a class="dropdown-item" href="#">Edit Customer</a></li>
+                                                    <li><a class="dropdown-item" href="#">Create Opportunity</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Deactivate</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="customer-row">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3" style="background-color: #ffecb3; display: flex; align-items: center; justify-content: center;">
+                                                    <span>JW</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">James Wilson</h6>
+                                                    <small class="text-muted">ID: CS-1002</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Individual</td>
+                                        <td>Michael Roberts</td>
+                                        <td>
+                                            <div>james.wilson@example.com</div>
+                                            <small class="text-muted">(555) 234-5678</small>
+                                        </td>
+                                        <td>$875,000</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdown2">
+                                                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                                    <li><a class="dropdown-item" href="#">Edit Customer</a></li>
+                                                    <li><a class="dropdown-item" href="#">Create Opportunity</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Deactivate</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="customer-row">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3" style="background-color: #e8eaf6; display: flex; align-items: center; justify-content: center;">
+                                                    <span>EC</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">Emily Chen</h6>
+                                                    <small class="text-muted">ID: CS-1003</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Individual</td>
+                                        <td>Jennifer Thompson</td>
+                                        <td>
+                                            <div>emily.chen@example.com</div>
+                                            <small class="text-muted">(555) 345-6789</small>
+                                        </td>
+                                        <td>$1,450,000</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdown3">
+                                                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                                    <li><a class="dropdown-item" href="#">Edit Customer</a></li>
+                                                    <li><a class="dropdown-item" href="#">Create Opportunity</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Deactivate</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="customer-row">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3" style="background-color: #d1c4e9; display: flex; align-items: center; justify-content: center;">
+                                                    <span>MR</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">Michael Rodriguez</h6>
+                                                    <small class="text-muted">ID: CS-1004</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Business</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>
+                                            <div>michael.r@rodriguez.com</div>
+                                            <small class="text-muted">(555) 456-7890</small>
+                                        </td>
+                                        <td>$3,250,000</td>
+                                        <td><span class="status-badge status-pending">Pending</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown4" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdown4">
+                                                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                                    <li><a class="dropdown-item" href="#">Edit Customer</a></li>
+                                                    <li><a class="dropdown-item" href="#">Create Opportunity</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#">Deactivate</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="customer-row">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar me-3" style="background-color: #c8e6c9; display: flex; align-items: center; justify-content: center;">
+                                                    <span>DB</span>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0">David Brown</h6>
+                                                    <small class="text-muted">ID: CS-1005</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>Individual</td>
+                                        <td>Michael Roberts</td>
+                                        <td>
+                                            <div>david.brown@example.com</div>
+                                            <small class="text-muted">(555) 567-8901</small>
+                                        </td>
+                                        <td>$925,000</td>
+                                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown5" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Actions
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="actionDropdown5">
+                                                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                                    <li><a class="dropdown-item" href="#">Edit Customer</a></li>
+                                                    <li><a class="dropdown-item" href="#">Create Opportunity</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-success" href="#">Activate</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="d-flex justify-content-between align-items-center p-3">
+                            <div class="text-muted small">
+                                Showing <span class="fw-bold">1-5</span> of <span class="fw-bold">24</span> customers
+                            </div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Filter chip functionality
+        document.querySelectorAll('.filter-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const parent = chip.parentElement;
+                // If "All" option clicked, deactivate other chips in this category
+                if (chip.textContent.includes('All')) {
+                    parent.querySelectorAll('.filter-chip').forEach(c => {
+                        c.classList.remove('active');
+                    });
+                    chip.classList.add('active');
+                } else {
+                    // Find the "All" option in this category and deactivate it
+                    const allChip = Array.from(parent.querySelectorAll('.filter-chip'))
+                        .find(c => c.textContent.includes('All'));
+                    
+                    if (allChip) {
+                        allChip.classList.remove('active');
+                    }
+                    
+                    // Toggle the clicked chip
+                    chip.classList.toggle('active');
+                    
+                    // If no specific options are active, reactivate the "All" option
+                    const activeSpecific = Array.from(parent.querySelectorAll('.filter-chip'))
+                        .some(c => !c.textContent.includes('All') && c.classList.contains('active'));
+                    
+                    if (!activeSpecific && allChip) {
+                        allChip.classList.add('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

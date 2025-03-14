@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | BankCRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f7fa;
+        }
+        
+        .sidebar {
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .nav-link {
+            color: #495057;
+            border-radius: 0;
+            padding: 0.8rem 1rem;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .search-bar {
+            border-radius: 20px;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 1rem;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .report-card {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .report-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        .tab-content {
+            padding: 20px 0;
+        }
+        
+        .filter-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .report-metric {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .metric-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .table-responsive {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar d-flex flex-column p-3">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                    <span class="fs-4 fw-bold text-primary">BankCRM</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="customer-list.html" class="nav-link">
+                            <i class="bi bi-people me-2"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="opportunity-pipeline.html" class="nav-link">
+                            <i class="bi bi-kanban me-2"></i> Opportunities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar-tasks.html" class="nav-link">
+                            <i class="bi bi-calendar-check me-2"></i> Calendar & Tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="documents.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text me-2"></i> Documents
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="nav-link active">
+                            <i class="bi bi-bar-chart me-2"></i> Reports
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle me-2">
+                        <strong>Sarah Johnson</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <nav class="navbar navbar-expand-lg mb-4 rounded">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Reports & Analytics</h4>
+                        <div class="d-flex">
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-download me-1"></i> Export
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="exportDropdown">
+                                    <li><a class="dropdown-item" href="#">Export as PDF</a></li>
+                                    <li><a class="dropdown-item" href="#">Export as Excel</a></li>
+                                    <li><a class="dropdown-item" href="#">Export as CSV</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown me-2">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="timeRangeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-calendar-range me-1"></i> This Quarter
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="timeRangeDropdown">
+                                    <li><a class="dropdown-item" href="#">This Week</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Quarter</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    <li><a class="dropdown-item" href="#">Custom Range...</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-1"></i> Create Report
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Key Metrics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="report-metric">
+                            <div class="metric-value">$4.2M</div>
+                            <div class="metric-label">Pipeline Value</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="report-metric">
+                            <div class="metric-value">42</div>
+                            <div class="metric-label">Active Opportunities</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="report-metric">
+                            <div class="metric-value">28</div>
+                            <div class="metric-label">New Customers</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="report-metric">
+                            <div class="metric-value">76%</div>
+                            <div class="metric-label">Conversion Rate</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Navigation Tabs -->
+                <ul class="nav nav-tabs mb-3" id="reportTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales" type="button" role="tab" aria-controls="sales" aria-selected="true">Sales Performance</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer" type="button" role="tab" aria-controls="customer" aria-selected="false">Customer Analytics</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="product-tab" data-bs-toggle="tab" data-bs-target="#product" type="button" role="tab" aria-controls="product" aria-selected="false">Product Performance</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab" aria-controls="team" aria-selected="false">Team Performance</button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="reportTabContent">
+                    <!-- Sales Performance Tab -->
+                    <div class="tab-pane fade show active" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Sales Trend</h5>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-outline-primary active">Daily</button>
+                                            <button type="button" class="btn btn-outline-primary">Weekly</button>
+                                            <button type="button" class="btn btn-outline-primary">Monthly</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Sales trend chart visualization</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Pipeline by Stage</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Pipeline stage distribution chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Top Deals</h5>
+                                        <button class="btn btn-sm btn-outline-primary">View All</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Opportunity Name</th>
+                                                        <th>Customer</th>
+                                                        <th>Value</th>
+                                                        <th>Stage</th>
+                                                        <th>Expected Close</th>
+                                                        <th>Assigned To</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Commercial Real Estate Loan</td>
+                                                        <td>David Brown</td>
+                                                        <td>$850,000</td>
+                                                        <td><span class="badge bg-warning">Negotiation</span></td>
+                                                        <td>May 30, 2023</td>
+                                                        <td>Sarah Johnson</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Investment Property Mortgage</td>
+                                                        <td>James Wilson</td>
+                                                        <td>$750,000</td>
+                                                        <td><span class="badge bg-info">Closing</span></td>
+                                                        <td>May 25, 2023</td>
+                                                        <td>Michael Roberts</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Trust Services</td>
+                                                        <td>James Wilson</td>
+                                                        <td>$500,000</td>
+                                                        <td><span class="badge bg-warning">Negotiation</span></td>
+                                                        <td>June 15, 2023</td>
+                                                        <td>Jennifer Thompson</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Retirement Planning</td>
+                                                        <td>James Wilson</td>
+                                                        <td>$250,000</td>
+                                                        <td><span class="badge bg-primary">Qualified</span></td>
+                                                        <td>July 5, 2023</td>
+                                                        <td>Sarah Johnson</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Investment Portfolio Rebalance</td>
+                                                        <td>Emily Chen</td>
+                                                        <td>$150,000</td>
+                                                        <td><span class="badge bg-secondary">Proposal</span></td>
+                                                        <td>June 10, 2023</td>
+                                                        <td>Jennifer Thompson</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Analytics Tab -->
+                    <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Customer Segment Distribution</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Customer segment pie chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Customer Acquisition Trend</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Customer acquisition line chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Top Customers by Value</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Customer</th>
+                                                        <th>Segment</th>
+                                                        <th>Products</th>
+                                                        <th>Lifetime Value</th>
+                                                        <th>Relationship Length</th>
+                                                        <th>Last Contact</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>James Wilson</td>
+                                                        <td><span class="badge bg-primary">High Net Worth</span></td>
+                                                        <td>Mortgage, Investments, Trust</td>
+                                                        <td>$1,250,000</td>
+                                                        <td>7 years</td>
+                                                        <td>Yesterday</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Emily Chen</td>
+                                                        <td><span class="badge bg-primary">High Net Worth</span></td>
+                                                        <td>Checking, Savings, Investments</td>
+                                                        <td>$980,000</td>
+                                                        <td>5 years</td>
+                                                        <td>3 days ago</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>David Brown</td>
+                                                        <td><span class="badge bg-warning">Small Business</span></td>
+                                                        <td>Business Loan, Checking</td>
+                                                        <td>$850,000</td>
+                                                        <td>3 years</td>
+                                                        <td>1 week ago</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Michael Rodriguez</td>
+                                                        <td><span class="badge bg-warning">Small Business</span></td>
+                                                        <td>Business Loan, Line of Credit</td>
+                                                        <td>$625,000</td>
+                                                        <td>2 years</td>
+                                                        <td>2 days ago</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Robert Smith</td>
+                                                        <td><span class="badge bg-warning">Small Business</span></td>
+                                                        <td>Checking, Business Loan</td>
+                                                        <td>$425,000</td>
+                                                        <td>2 months</td>
+                                                        <td>Yesterday</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Performance Tab -->
+                    <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Product Revenue Contribution</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Product revenue bar chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Product Cross-Selling Opportunities</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Cross-selling heatmap visualization</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Product Growth Rate</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Product growth line chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Performance Tab -->
+                    <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Team Performance by Revenue</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Team performance bar chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Conversion Rates by Team Member</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <!-- Chart would be inserted here -->
+                                            <div class="d-flex justify-content-center align-items-center h-100 text-muted">
+                                                <p class="mb-0">Conversion rate chart</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Team Member Performance</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Team Member</th>
+                                                        <th>Revenue Generated</th>
+                                                        <th>Opportunities Closed</th>
+                                                        <th>Conversion Rate</th>
+                                                        <th>Avg. Deal Size</th>
+                                                        <th>In Pipeline</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Sarah Johnson</td>
+                                                        <td>$1,250,000</td>
+                                                        <td>24</td>
+                                                        <td>78%</td>
+                                                        <td>$52,083</td>
+                                                        <td>15</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Michael Roberts</td>
+                                                        <td>$980,000</td>
+                                                        <td>18</td>
+                                                        <td>72%</td>
+                                                        <td>$54,444</td>
+                                                        <td>12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jennifer Thompson</td>
+                                                        <td>$850,000</td>
+                                                        <td>22</td>
+                                                        <td>68%</td>
+                                                        <td>$38,636</td>
+                                                        <td>16</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>David Miller</td>
+                                                        <td>$755,000</td>
+                                                        <td>20</td>
+                                                        <td>80%</td>
+                                                        <td>$37,750</td>
+                                                        <td>8</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Emily Rodriguez</td>
+                                                        <td>$645,000</td>
+                                                        <td>15</td>
+                                                        <td>65%</td>
+                                                        <td>$43,000</td>
+                                                        <td>14</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

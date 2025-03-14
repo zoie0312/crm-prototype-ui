@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | BankCRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f7fa;
+        }
+        
+        .sidebar {
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .nav-link {
+            color: #495057;
+            border-radius: 0;
+            padding: 0.8rem 1rem;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .settings-nav .nav-link {
+            color: var(--dark-text);
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        
+        .settings-nav .nav-link.active {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .settings-nav .nav-link:hover:not(.active) {
+            background-color: rgba(0,0,0,0.03);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar d-flex flex-column p-3">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                    <span class="fs-4 fw-bold text-primary">BankCRM</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="customer-list.html" class="nav-link">
+                            <i class="bi bi-people me-2"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="opportunity-pipeline.html" class="nav-link">
+                            <i class="bi bi-kanban me-2"></i> Opportunities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar-tasks.html" class="nav-link">
+                            <i class="bi bi-calendar-check me-2"></i> Calendar & Tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="documents.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text me-2"></i> Documents
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="nav-link">
+                            <i class="bi bi-bar-chart me-2"></i> Reports
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle me-2">
+                        <strong>Sarah Johnson</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item active" href="settings.html">Settings</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <nav class="navbar navbar-expand-lg mb-4 rounded">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Settings</h4>
+                    </div>
+                </nav>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center mb-4">
+                                    <img src="https://via.placeholder.com/100" alt="Profile" class="avatar mb-3">
+                                    <h5 class="mb-1">Sarah Johnson</h5>
+                                    <p class="text-muted mb-1">Relationship Manager</p>
+                                    <button class="btn btn-sm btn-outline-primary mt-2">Change Photo</button>
+                                </div>
+                                <div class="settings-nav">
+                                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <button class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile Settings</button>
+                                        <button class="nav-link" id="v-pills-security-tab" data-bs-toggle="pill" data-bs-target="#v-pills-security" type="button" role="tab" aria-controls="v-pills-security" aria-selected="false">Security</button>
+                                        <button class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notifications" type="button" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</button>
+                                        <button class="nav-link" id="v-pills-appearance-tab" data-bs-toggle="pill" data-bs-target="#v-pills-appearance" type="button" role="tab" aria-controls="v-pills-appearance" aria-selected="false">Appearance</button>
+                                        <button class="nav-link" id="v-pills-integrations-tab" data-bs-toggle="pill" data-bs-target="#v-pills-integrations" type="button" role="tab" aria-controls="v-pills-integrations" aria-selected="false">Integrations</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <!-- Profile Settings Tab -->
+                            <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Profile Information</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" value="Sarah">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName" value="Johnson">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="email" class="form-label">Email Address</label>
+                                                    <input type="email" class="form-control" id="email" value="sarah.johnson@bankcrm.com">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phone" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="phone" value="(555) 123-4567">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="jobTitle" class="form-label">Job Title</label>
+                                                <input type="text" class="form-control" id="jobTitle" value="Relationship Manager">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="department" class="form-label">Department</label>
+                                                <select class="form-select" id="department">
+                                                    <option>Retail Banking</option>
+                                                    <option selected>Wealth Management</option>
+                                                    <option>Commercial Banking</option>
+                                                    <option>Mortgage Services</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="bio" class="form-label">Bio</label>
+                                                <textarea class="form-control" id="bio" rows="3">Experienced relationship manager with 8+ years specializing in high net worth client services and portfolio management.</textarea>
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Security Tab -->
+                            <div class="tab-pane fade" id="v-pills-security" role="tabpanel" aria-labelledby="v-pills-security-tab">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Change Password</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="currentPassword" class="form-label">Current Password</label>
+                                                <input type="password" class="form-control" id="currentPassword">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="newPassword" class="form-label">New Password</label>
+                                                <input type="password" class="form-control" id="newPassword">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                                <input type="password" class="form-control" id="confirmPassword">
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn btn-primary">Update Password</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Two-Factor Authentication</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorToggle" checked>
+                                            <label class="form-check-label" for="twoFactorToggle">Enable Two-Factor Authentication</label>
+                                        </div>
+                                        <p class="text-muted">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in.</p>
+                                        <button class="btn btn-outline-primary">Reconfigure Two-Factor</button>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Login Sessions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">Chrome on Windows</h6>
+                                                        <p class="text-muted mb-0 small">New York, USA • Current Session</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-secondary">Active</button>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">Safari on macOS</h6>
+                                                        <p class="text-muted mb-0 small">Boston, USA • Last active: 2 days ago</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-danger">Revoke</button>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">BankCRM Mobile App</h6>
+                                                        <p class="text-muted mb-0 small">New York, USA • Last active: 1 hour ago</p>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-outline-danger">Revoke</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Notifications Tab -->
+                            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Notification Preferences</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6 class="card-subtitle mb-3 text-muted">Email Notifications</h6>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailNewCustomer" checked>
+                                                <label class="form-check-label" for="emailNewCustomer">New customer assignments</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailTaskReminders" checked>
+                                                <label class="form-check-label" for="emailTaskReminders">Task reminders</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailMeetingReminders" checked>
+                                                <label class="form-check-label" for="emailMeetingReminders">Meeting reminders</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailDealUpdates" checked>
+                                                <label class="form-check-label" for="emailDealUpdates">Deal status updates</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailWeeklyReports">
+                                                <label class="form-check-label" for="emailWeeklyReports">Weekly performance reports</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailMonthlyReports" checked>
+                                                <label class="form-check-label" for="emailMonthlyReports">Monthly performance reports</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <h6 class="card-subtitle mb-3 text-muted">In-App Notifications</h6>
+                                        <div class="mb-3">
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppChat" checked>
+                                                <label class="form-check-label" for="inAppChat">Chat messages</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppAssignments" checked>
+                                                <label class="form-check-label" for="inAppAssignments">New assignments</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppTasks" checked>
+                                                <label class="form-check-label" for="inAppTasks">Task updates</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppMeetings" checked>
+                                                <label class="form-check-label" for="inAppMeetings">Meeting reminders</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppDealUpdates" checked>
+                                                <label class="form-check-label" for="inAppDealUpdates">Deal status changes</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="inAppSystemUpdates">
+                                                <label class="form-check-label" for="inAppSystemUpdates">System updates</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-end">
+                                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Appearance Tab -->
+                            <div class="tab-pane fade" id="v-pills-appearance" role="tabpanel" aria-labelledby="v-pills-appearance-tab">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Theme Settings</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-4">
+                                            <h6>Color Theme</h6>
+                                            <div class="d-flex mt-3">
+                                                <div class="form-check me-4">
+                                                    <input class="form-check-input" type="radio" name="colorTheme" id="themeLight" checked>
+                                                    <label class="form-check-label" for="themeLight">
+                                                        Light
+                                                    </label>
+                                                </div>
+                                                <div class="form-check me-4">
+                                                    <input class="form-check-input" type="radio" name="colorTheme" id="themeDark">
+                                                    <label class="form-check-label" for="themeDark">
+                                                        Dark
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="colorTheme" id="themeSystem">
+                                                    <label class="form-check-label" for="themeSystem">
+                                                        Use System Setting
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h6>Accent Color</h6>
+                                            <div class="d-flex mt-3">
+                                                <div class="me-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="accentColor" id="accentBlue" checked style="background-color: #0056b3; border-color: #0056b3;">
+                                                        <label class="form-check-label" for="accentBlue">
+                                                            Blue
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="me-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="accentColor" id="accentGreen" style="background-color: #28a745; border-color: #28a745;">
+                                                        <label class="form-check-label" for="accentGreen">
+                                                            Green
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="me-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="accentColor" id="accentPurple" style="background-color: #6f42c1; border-color: #6f42c1;">
+                                                        <label class="form-check-label" for="accentPurple">
+                                                            Purple
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="accentColor" id="accentRed" style="background-color: #dc3545; border-color: #dc3545;">
+                                                        <label class="form-check-label" for="accentRed">
+                                                            Red
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h6>Font Size</h6>
+                                            <div class="d-flex mt-3">
+                                                <div class="form-check me-4">
+                                                    <input class="form-check-input" type="radio" name="fontSize" id="fontSmall">
+                                                    <label class="form-check-label" for="fontSmall">
+                                                        Small
+                                                    </label>
+                                                </div>
+                                                <div class="form-check me-4">
+                                                    <input class="form-check-input" type="radio" name="fontSize" id="fontMedium" checked>
+                                                    <label class="form-check-label" for="fontMedium">
+                                                        Medium
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="fontSize" id="fontLarge">
+                                                    <label class="form-check-label" for="fontLarge">
+                                                        Large
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-end">
+                                            <button class="btn btn-primary">Save Settings</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Integrations Tab -->
+                            <div class="tab-pane fade" id="v-pills-integrations" role="tabpanel" aria-labelledby="v-pills-integrations-tab">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Connected Applications</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <i class="bi bi-microsoft me-2 fs-3"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Microsoft 365</h6>
+                                                            <p class="text-muted mb-0 small">Calendar, Email, OneDrive</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="intMicrosoft" checked>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <i class="bi bi-google me-2 fs-3"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Google Workspace</h6>
+                                                            <p class="text-muted mb-0 small">Gmail, Google Calendar, Drive</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="intGoogle">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <i class="bi bi-slack me-2 fs-3"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Slack</h6>
+                                                            <p class="text-muted mb-0 small">Team messaging, notifications</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="intSlack" checked>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <i class="bi bi-credit-card-2-front me-2 fs-3"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Payment Gateway</h6>
+                                                            <p class="text-muted mb-0 small">Stripe integration for payments</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="intPayment" checked>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-3">
+                                                            <i class="bi bi-telephone me-2 fs-3"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">VoIP System</h6>
+                                                            <p class="text-muted mb-0 small">Call tracking and recording</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="intVoip">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-center mt-4">
+                                            <button class="btn btn-outline-primary">
+                                                <i class="bi bi-plus-circle me-2"></i> Connect New Application
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar & Tasks | BankCRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #6c757d;
+            --accent-color: #28a745;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+            color: var(--dark-text);
+            background-color: #f5f7fa;
+        }
+        
+        .sidebar {
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .nav-link {
+            color: #495057;
+            border-radius: 0;
+            padding: 0.8rem 1rem;
+        }
+        
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .search-bar {
+            border-radius: 20px;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 1rem;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .calendar-container {
+            height: 600px;
+            overflow-y: auto;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-month {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-weight: 500;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+        
+        .calendar-day {
+            min-height: 120px;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: white;
+        }
+        
+        .calendar-day.today {
+            background-color: #e8f4ff;
+            border-color: #b8daff;
+        }
+        
+        .calendar-day.other-month {
+            background-color: #f8f9fa;
+            color: #adb5bd;
+        }
+        
+        .day-number {
+            font-weight: 500;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+        
+        .calendar-event {
+            background-color: #e8f4ff;
+            color: #0056b3;
+            border-radius: 3px;
+            padding: 3px 5px;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .calendar-event.meeting {
+            background-color: #e8f4ff;
+            color: #0056b3;
+        }
+        
+        .calendar-event.task {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .calendar-event.deadline {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .calendar-event.reminder {
+            background-color: #f3e5f5;
+            color: #9c27b0;
+        }
+        
+        .task-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .task-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+        }
+        
+        .task-checkbox {
+            margin-right: 10px;
+        }
+        
+        .task-content {
+            flex-grow: 1;
+        }
+        
+        .task-title {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .task-meta {
+            display: flex;
+            gap: 10px;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .task-priority {
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+        }
+        
+        .task-priority-high {
+            background-color: #f8d7da;
+            color: #dc3545;
+        }
+        
+        .task-priority-medium {
+            background-color: #fff3cd;
+            color: #ffc107;
+        }
+        
+        .task-priority-low {
+            background-color: #d1e7dd;
+            color: #198754;
+        }
+        
+        .task-due {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .task-action {
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .task-action:hover {
+            color: var(--primary-color);
+        }
+        
+        .task-completed .task-title {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+        
+        .task-completed .task-meta {
+            color: #adb5bd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar d-flex flex-column p-3">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                    <span class="fs-4 fw-bold text-primary">BankCRM</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="dashboard.html" class="nav-link">
+                            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="customer-list.html" class="nav-link">
+                            <i class="bi bi-people me-2"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="opportunity-pipeline.html" class="nav-link">
+                            <i class="bi bi-kanban me-2"></i> Opportunities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="calendar-tasks.html" class="nav-link active">
+                            <i class="bi bi-calendar-check me-2"></i> Calendar & Tasks
+                        </a>
+                    </li>
+                    <li>
+                        <a href="documents.html" class="nav-link">
+                            <i class="bi bi-file-earmark-text me-2"></i> Documents
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="nav-link">
+                            <i class="bi bi-bar-chart me-2"></i> Reports
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-circle me-2">
+                        <strong>Sarah Johnson</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                        <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <!-- Top Navigation -->
+                <nav class="navbar navbar-expand-lg mb-4 rounded">
+                    <div class="container-fluid">
+                        <h4 class="mb-0">Calendar & Tasks</h4>
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown me-3">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="calendarViewDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-calendar me-2"></i> Month View
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="calendarViewDropdown">
+                                    <li><a class="dropdown-item" href="#">Month View</a></li>
+                                    <li><a class="dropdown-item" href="#">Week View</a></li>
+                                    <li><a class="dropdown-item" href="#">Day View</a></li>
+                                    <li><a class="dropdown-item" href="#">Agenda View</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-primary">
+                                <i class="bi bi-plus-lg me-2"></i> Add Event
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="row">
+                    <!-- Calendar Section -->
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="calendar-header">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-sm btn-outline-secondary me-2">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </button>
+                                        <h5 class="mb-0">May 2023</h5>
+                                        <button class="btn btn-sm btn-outline-secondary ms-2">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-sm btn-outline-primary">Today</button>
+                                    </div>
+                                </div>
+                                <div class="calendar-container">
+                                    <div class="calendar-month">
+                                        <!-- Weekday Headers -->
+                                        <div class="calendar-weekday">Sun</div>
+                                        <div class="calendar-weekday">Mon</div>
+                                        <div class="calendar-weekday">Tue</div>
+                                        <div class="calendar-weekday">Wed</div>
+                                        <div class="calendar-weekday">Thu</div>
+                                        <div class="calendar-weekday">Fri</div>
+                                        <div class="calendar-weekday">Sat</div>
+                                        
+                                        <!-- Week 1 -->
+                                        <div class="calendar-day other-month">
+                                            <div class="day-number">30</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">1</div>
+                                            <div class="calendar-event meeting">9:00 AM Team Meeting</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">2</div>
+                                            <div class="calendar-event deadline">Credit Application Due</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">3</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">4</div>
+                                            <div class="calendar-event task">Follow up with James Wilson</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">5</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">6</div>
+                                        </div>
+                                        
+                                        <!-- Week 2 -->
+                                        <div class="calendar-day">
+                                            <div class="day-number">7</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">8</div>
+                                            <div class="calendar-event reminder">Quarterly Report</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">9</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">10</div>
+                                            <div class="calendar-event meeting">1:30 PM Maria Garcia</div>
+                                            <div class="calendar-event meeting">3:00 PM Executive Review</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">11</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">12</div>
+                                            <div class="calendar-event task">Call Robert Smith</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">13</div>
+                                        </div>
+                                        
+                                        <!-- Week 3 -->
+                                        <div class="calendar-day">
+                                            <div class="day-number">14</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">15</div>
+                                            <div class="calendar-event meeting">10:00 AM Mortgage Team</div>
+                                        </div>
+                                        <div class="calendar-day today">
+                                            <div class="day-number">16</div>
+                                            <div class="calendar-event meeting">11:00 AM Robert Smith</div>
+                                            <div class="calendar-event task">Review Loan Application</div>
+                                            <div class="calendar-event deadline">Investment Proposal</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">17</div>
+                                            <div class="calendar-event meeting">2:00 PM James Wilson</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">18</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">19</div>
+                                            <div class="calendar-event reminder">Monthly Sales Report</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">20</div>
+                                        </div>
+                                        
+                                        <!-- Week 4 -->
+                                        <div class="calendar-day">
+                                            <div class="day-number">21</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">22</div>
+                                            <div class="calendar-event meeting">9:30 AM Team Standup</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">23</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">24</div>
+                                            <div class="calendar-event task">Call Emily Chen</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">25</div>
+                                            <div class="calendar-event deadline">Loan Closing</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">26</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">27</div>
+                                        </div>
+                                        
+                                        <!-- Week 5 -->
+                                        <div class="calendar-day">
+                                            <div class="day-number">28</div>
+                                            <div class="calendar-event meeting">1:00 PM James Wilson</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">29</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">30</div>
+                                            <div class="calendar-event reminder">End of Month Report</div>
+                                        </div>
+                                        <div class="calendar-day">
+                                            <div class="day-number">31</div>
+                                        </div>
+                                        <div class="calendar-day other-month">
+                                            <div class="day-number">1</div>
+                                        </div>
+                                        <div class="calendar-day other-month">
+                                            <div class="day-number">2</div>
+                                        </div>
+                                        <div class="calendar-day other-month">
+                                            <div class="day-number">3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Task List Section -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">My Tasks</h5>
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-plus-lg"></i> New Task
+                                </button>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="d-flex justify-content-between p-3 border-bottom">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-primary">All</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">Today</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary">Upcoming</button>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="taskSortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Sort
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="taskSortDropdown">
+                                            <li><a class="dropdown-item" href="#">By Due Date</a></li>
+                                            <li><a class="dropdown-item" href="#">By Priority</a></li>
+                                            <li><a class="dropdown-item" href="#">By Customer</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="task-list">
+                                    <div class="task-item">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task1">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Review mortgage application for Robert Smith</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-high">High Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>Today</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item task-completed">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task2" checked>
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Schedule follow-up call with Maria Garcia</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-medium">Medium Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>Yesterday</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task3">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Prepare investment proposal for James Wilson</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-high">High Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>Today</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task4">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Call Emily Chen about credit card application</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-low">Low Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>Tomorrow</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task5">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Finalize loan document for David Brown</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-medium">Medium Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>May 25</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-checkbox">
+                                            <input class="form-check-input" type="checkbox" id="task6">
+                                        </div>
+                                        <div class="task-content">
+                                            <div class="task-title">Prepare monthly sales report</div>
+                                            <div class="task-meta">
+                                                <span class="task-priority task-priority-high">High Priority</span>
+                                                <div class="task-due">
+                                                    <i class="bi bi-clock"></i>
+                                                    <span>May 19</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="task-actions">
+                                            <span class="task-action"><i class="bi bi-pencil"></i></span>
+                                            <span class="task-action"><i class="bi bi-three-dots-vertical"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Upcoming Meetings</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong>Mortgage Application Review</strong>
+                                            <span class="badge bg-primary rounded-pill">Today</span>
+                                        </div>
+                                        <p class="mb-1 text-muted small">
+                                            <i class="bi bi-clock me-1"></i> 11:00 AM - 12:00 PM
+                                            <i class="bi bi-person ms-2 me-1"></i> Robert Smith
+                                        </p>
+                                    </div>
+                                    <div class="list-group-item p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong>Investment Portfolio Review</strong>
+                                            <span class="badge bg-primary rounded-pill">Today</span>
+                                        </div>
+                                        <p class="mb-1 text-muted small">
+                                            <i class="bi bi-clock me-1"></i> 2:00 PM - 3:00 PM
+                                            <i class="bi bi-person ms-2 me-1"></i> James Wilson
+                                        </p>
+                                    </div>
+                                    <div class="list-group-item p-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong>Business Loan Consultation</strong>
+                                            <span class="badge bg-secondary rounded-pill">Tomorrow</span>
+                                        </div>
+                                        <p class="mb-1 text-muted small">
+                                            <i class="bi bi-clock me-1"></i> 4:30 PM - 5:30 PM
+                                            <i class="bi bi-person ms-2 me-1"></i> Michael Rodriguez
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
