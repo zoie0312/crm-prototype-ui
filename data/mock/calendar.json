@@ -1,0 +1,140 @@
+{
+  "currentMonth": "May 2023",
+  "calendarDays": [
+    { "day": 30, "isOtherMonth": true, "events": [] },
+    { "day": 1, "isOtherMonth": false, "events": [
+      { "id": 1, "title": "9:00 AM Team Meeting", "type": "meeting" }
+    ]},
+    { "day": 2, "isOtherMonth": false, "events": [
+      { "id": 2, "title": "Credit Application Due", "type": "deadline" }
+    ]},
+    { "day": 3, "isOtherMonth": false, "events": [] },
+    { "day": 4, "isOtherMonth": false, "events": [
+      { "id": 3, "title": "Follow up with James Wilson", "type": "task" }
+    ]},
+    { "day": 5, "isOtherMonth": false, "events": [] },
+    { "day": 6, "isOtherMonth": false, "events": [] },
+    { "day": 7, "isOtherMonth": false, "events": [] },
+    { "day": 8, "isOtherMonth": false, "events": [
+      { "id": 4, "title": "Quarterly Report", "type": "reminder" }
+    ]},
+    { "day": 9, "isOtherMonth": false, "events": [] },
+    { "day": 10, "isOtherMonth": false, "events": [
+      { "id": 5, "title": "1:30 PM Maria Garcia", "type": "meeting" },
+      { "id": 6, "title": "3:00 PM Executive Review", "type": "meeting" }
+    ]},
+    { "day": 11, "isOtherMonth": false, "events": [] },
+    { "day": 12, "isOtherMonth": false, "events": [
+      { "id": 7, "title": "Call Robert Smith", "type": "task" }
+    ]},
+    { "day": 13, "isOtherMonth": false, "events": [] },
+    { "day": 14, "isOtherMonth": false, "events": [] },
+    { "day": 15, "isOtherMonth": false, "events": [
+      { "id": 8, "title": "10:00 AM Mortgage Team", "type": "meeting" }
+    ]},
+    { "day": 16, "isOtherMonth": false, "isToday": true, "events": [
+      { "id": 9, "title": "11:00 AM Robert Smith", "type": "meeting" },
+      { "id": 10, "title": "Review Loan Application", "type": "task" },
+      { "id": 11, "title": "Investment Proposal", "type": "deadline" }
+    ]},
+    { "day": 17, "isOtherMonth": false, "events": [
+      { "id": 12, "title": "2:00 PM James Wilson", "type": "meeting" }
+    ]},
+    { "day": 18, "isOtherMonth": false, "events": [] },
+    { "day": 19, "isOtherMonth": false, "events": [
+      { "id": 13, "title": "Monthly Sales Report", "type": "reminder" }
+    ]},
+    { "day": 20, "isOtherMonth": false, "events": [] },
+    { "day": 21, "isOtherMonth": false, "events": [] },
+    { "day": 22, "isOtherMonth": false, "events": [
+      { "id": 14, "title": "9:30 AM Team Standup", "type": "meeting" }
+    ]},
+    { "day": 23, "isOtherMonth": false, "events": [] },
+    { "day": 24, "isOtherMonth": false, "events": [
+      { "id": 15, "title": "Call Emily Chen", "type": "task" }
+    ]},
+    { "day": 25, "isOtherMonth": false, "events": [
+      { "id": 16, "title": "Loan Closing", "type": "deadline" }
+    ]},
+    { "day": 26, "isOtherMonth": false, "events": [] },
+    { "day": 27, "isOtherMonth": false, "events": [] },
+    { "day": 28, "isOtherMonth": false, "events": [
+      { "id": 17, "title": "1:00 PM James Wilson", "type": "meeting" }
+    ]},
+    { "day": 29, "isOtherMonth": false, "events": [] },
+    { "day": 30, "isOtherMonth": false, "events": [
+      { "id": 18, "title": "End of Month Report", "type": "reminder" }
+    ]},
+    { "day": 31, "isOtherMonth": false, "events": [] },
+    { "day": 1, "isOtherMonth": true, "events": [] },
+    { "day": 2, "isOtherMonth": true, "events": [] },
+    { "day": 3, "isOtherMonth": true, "events": [] }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Review mortgage application for Robert Smith",
+      "priority": "high",
+      "dueDate": "Today",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "title": "Schedule follow-up call with Maria Garcia",
+      "priority": "medium",
+      "dueDate": "Yesterday",
+      "completed": true
+    },
+    {
+      "id": 3,
+      "title": "Prepare investment proposal for James Wilson",
+      "priority": "high",
+      "dueDate": "Today",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "title": "Call Emily Chen about credit card application",
+      "priority": "low",
+      "dueDate": "Tomorrow",
+      "completed": false
+    },
+    {
+      "id": 5,
+      "title": "Finalize loan document for David Brown",
+      "priority": "medium",
+      "dueDate": "May 25",
+      "completed": false
+    },
+    {
+      "id": 6,
+      "title": "Prepare monthly sales report",
+      "priority": "high",
+      "dueDate": "May 19",
+      "completed": false
+    }
+  ],
+  "upcomingMeetings": [
+    {
+      "id": 1,
+      "title": "Mortgage Application Review",
+      "time": "11:00 AM - 12:00 PM",
+      "date": "Today",
+      "attendee": "Robert Smith"
+    },
+    {
+      "id": 2,
+      "title": "Investment Portfolio Review",
+      "time": "2:00 PM - 3:00 PM",
+      "date": "Today",
+      "attendee": "James Wilson"
+    },
+    {
+      "id": 3,
+      "title": "Business Loan Consultation",
+      "time": "4:30 PM - 5:30 PM",
+      "date": "Tomorrow",
+      "attendee": "Michael Rodriguez"
+    }
+  ]
+} 

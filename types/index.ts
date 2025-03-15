@@ -76,4 +76,42 @@ export interface CustomersData {
 // Opportunities data structure
 export interface OpportunitiesData {
   opportunities: Opportunity[];
+}
+
+// Calendar & Tasks data types
+export interface CalendarEvent {
+  id: number;
+  title: string;
+  type: 'meeting' | 'task' | 'deadline' | 'reminder';
+}
+
+export interface CalendarDay {
+  day: number;
+  isOtherMonth: boolean;
+  isToday?: boolean;
+  events: CalendarEvent[];
+}
+
+export interface Task {
+  id: number;
+  title: string;
+  priority: 'high' | 'medium' | 'low';
+  dueDate: string;
+  completed: boolean;
+}
+
+export interface Meeting {
+  id: number;
+  title: string;
+  time: string;
+  date: string;
+  attendee: string;
+}
+
+// Calendar data structure
+export interface CalendarData {
+  currentMonth: string;
+  calendarDays: CalendarDay[];
+  tasks: Task[];
+  upcomingMeetings: Meeting[];
 } 
