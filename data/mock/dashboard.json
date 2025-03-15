@@ -1,0 +1,27 @@
+{
+  "recentCustomers": [
+    { "id": 1, "name": "John Smith", "company": "ABC Corp", "date": "2023-03-14", "status": "Active" },
+    { "id": 2, "name": "Sarah Johnson", "company": "XYZ Inc", "date": "2023-03-13", "status": "Active" },
+    { "id": 3, "name": "Michael Brown", "company": "Acme Ltd", "date": "2023-03-12", "status": "Inactive" }
+  ],
+  "upcomingTasks": [
+    { "id": 1, "title": "Call with John Smith", "date": "2023-03-15 10:00 AM", "type": "Call" },
+    { "id": 2, "title": "Meeting with XYZ Inc", "date": "2023-03-16 2:00 PM", "type": "Meeting" },
+    { "id": 3, "title": "Prepare proposal for Acme Ltd", "date": "2023-03-17", "type": "Task" }
+  ],
+  "opportunities": [
+    { "id": 1, "name": "Business Loan - ABC Corp", "value": 250000, "stage": "Proposal", "probability": 60 },
+    { "id": 2, "name": "Credit Line - XYZ Inc", "value": 100000, "stage": "Negotiation", "probability": 80 },
+    { "id": 3, "name": "Equipment Financing - Acme Ltd", "value": 75000, "stage": "Qualification", "probability": 40 }
+  ],
+  "summaryMetrics": {
+    "totalCustomers": 128,
+    "customerGrowth": 12,
+    "activeOpportunities": 45,
+    "opportunityGrowth": 5,
+    "pipelineValue": "2.4M",
+    "pipelineValueChange": -3,
+    "upcomingTasksCount": 23,
+    "taskGrowth": 8
+  }
+} 
