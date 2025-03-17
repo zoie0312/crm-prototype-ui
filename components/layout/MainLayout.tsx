@@ -16,7 +16,8 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Tooltip
+  Tooltip,
+  IconButton as MuiIconButton,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -27,9 +28,13 @@ import {
   Description as DocumentIcon,
   BarChart as ReportIcon,
   Settings as SettingsIcon,
+  Brightness4 as DarkModeIcon,
+  Brightness7 as LightModeIcon,
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTheme } from '@/context/ThemeContext';
+import { useTheme as useMuiTheme } from '@mui/material/styles';
 
 const drawerWidth = 240;
 
@@ -48,6 +53,8 @@ export default function MainLayout({ children, title = 'Bank CRM' }: MainLayoutP
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const router = useRouter();
+  const { mode, toggleColorMode } = useTheme();
+  const muiTheme = useMuiTheme();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -65,6 +72,11 @@ export default function MainLayout({ children, title = 'Bank CRM' }: MainLayoutP
     // Handle logout logic here
     handleCloseUserMenu();
     router.push('/login');
+  };
+
+  const navigateTo = (path: string) => {
+    router.push(path);
+    setMobileOpen(false);
   };
 
   const navItems: NavItem[] = [
@@ -92,6 +104,7 @@ export default function MainLayout({ children, title = 'Bank CRM' }: MainLayoutP
               component={Link} 
               href={item.href}
               selected={router.pathname === item.href}
+              onClick={() => navigateTo(item.href)}
             >
               <ListItemIcon>
                 {item.icon}
@@ -127,6 +140,17 @@ export default function MainLayout({ children, title = 'Bank CRM' }: MainLayoutP
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
+          
+          {/* Theme toggle */}
+          <Tooltip title={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}>
+            <MuiIconButton 
+              onClick={toggleColorMode} 
+              color="inherit" 
+              sx={{ mr: 2 }}
+            >
+              {muiTheme.palette.mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+            </MuiIconButton>
+          </Tooltip>
           
           {/* User profile menu */}
           <Box sx={{ flexGrow: 0 }}>

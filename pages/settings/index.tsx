@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -32,6 +32,7 @@ import {
   Paper,
   SelectChangeEvent
 } from '@mui/material';
+import { useTheme } from '@/context/ThemeContext';
 import {
   Person as PersonIcon,
   Security as SecurityIcon,
@@ -97,6 +98,18 @@ const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { mode, setMode } = useTheme();
+
+  // Initialize appearance settings with current theme mode
+  useEffect(() => {
+    setData(prevData => ({
+      ...prevData,
+      appearance: {
+        ...prevData.appearance,
+        theme: mode
+      }
+    }));
+  }, [mode]);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -154,11 +167,13 @@ const SettingsPage = () => {
   };
 
   const handleThemeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newTheme = e.target.value as 'light' | 'dark' | 'system';
+    setMode(newTheme);
     setData({
       ...data,
       appearance: {
         ...data.appearance,
-        theme: e.target.value as 'light' | 'dark' | 'system'
+        theme: newTheme
       }
     });
   };
@@ -652,7 +667,7 @@ const SettingsPage = () => {
                     <RadioGroup
                       row
                       name="theme"
-                      value={data.appearance.theme}
+                      value={mode}
                       onChange={handleThemeChange}
                     >
                       <FormControlLabel value="light" control={<Radio />} label="Light" />
@@ -762,4 +777,6 @@ const SettingsPage = () => {
   );
 };
 
-export default SettingsPage; 
+export default SettingsPage;
+
+                       
