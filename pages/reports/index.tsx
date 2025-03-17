@@ -17,7 +17,6 @@ import {
   TableContainer, 
   TableHead, 
   TableRow, 
-  Paper, 
   Chip, 
   ButtonGroup,
   Divider
@@ -33,7 +32,7 @@ import {
 } from '@mui/icons-material';
 import MainLayout from '@/components/layout/MainLayout';
 import reportsData from '@/data/mock/reports.json';
-import { ReportsData, KeyMetric, TopDeal, TopCustomer, TeamMember } from '@/types';
+import { ReportsData } from '@/types';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,6 +66,10 @@ function a11yProps(index: number) {
     'aria-controls': `report-tabpanel-${index}`,
   };
 }
+
+// Define types for the color values
+type StageColorType = 'primary' | 'secondary' | 'warning' | 'info' | 'default';
+type SegmentColorType = 'primary' | 'warning' | 'default';
 
 const ReportsPage = () => {
   const [data] = useState<ReportsData>(reportsData as unknown as ReportsData);
@@ -103,7 +106,7 @@ const ReportsPage = () => {
     setChartView(view);
   };
 
-  const getStageColor = (stage: string) => {
+  const getStageColor = (stage: string): StageColorType => {
     switch (stage) {
       case 'Qualified':
         return 'primary';
@@ -118,7 +121,7 @@ const ReportsPage = () => {
     }
   };
 
-  const getSegmentColor = (segment: string) => {
+  const getSegmentColor = (segment: string): SegmentColorType => {
     switch (segment) {
       case 'High Net Worth':
         return 'primary';
@@ -304,7 +307,7 @@ const ReportsPage = () => {
                               <TableCell>
                                 <Chip 
                                   label={deal.stage} 
-                                  color={getStageColor(deal.stage) as any} 
+                                  color={getStageColor(deal.stage)} 
                                   size="small" 
                                 />
                               </TableCell>
@@ -386,7 +389,7 @@ const ReportsPage = () => {
                               <TableCell>
                                 <Chip 
                                   label={customer.segment} 
-                                  color={getSegmentColor(customer.segment) as any} 
+                                  color={getSegmentColor(customer.segment)} 
                                   size="small" 
                                 />
                               </TableCell>
