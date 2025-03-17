@@ -1,0 +1,98 @@
+{
+  "profile": {
+    "firstName": "Sarah",
+    "lastName": "Johnson",
+    "email": "sarah.johnson@bankcrm.com",
+    "phone": "(555) 123-4567",
+    "jobTitle": "Relationship Manager",
+    "department": "Wealth Management",
+    "bio": "Experienced relationship manager with 8+ years specializing in high net worth client services and portfolio management.",
+    "avatar": "/images/avatar.jpg"
+  },
+  "security": {
+    "twoFactorEnabled": true,
+    "sessions": [
+      {
+        "id": 1,
+        "device": "Chrome on Windows",
+        "location": "New York, USA",
+        "status": "Current Session",
+        "lastActive": "Now"
+      },
+      {
+        "id": 2,
+        "device": "Safari on macOS",
+        "location": "Boston, USA",
+        "status": "Active",
+        "lastActive": "2 days ago"
+      },
+      {
+        "id": 3,
+        "device": "BankCRM Mobile App",
+        "location": "New York, USA",
+        "status": "Active",
+        "lastActive": "1 hour ago"
+      }
+    ]
+  },
+  "notifications": {
+    "email": {
+      "newCustomerAssignments": true,
+      "taskReminders": true,
+      "meetingReminders": true,
+      "dealStatusUpdates": true,
+      "weeklyReports": false,
+      "monthlyReports": true
+    },
+    "inApp": {
+      "chatMessages": true,
+      "newAssignments": true,
+      "taskUpdates": true,
+      "meetingReminders": true,
+      "dealStatusChanges": true,
+      "systemUpdates": false
+    }
+  },
+  "appearance": {
+    "theme": "light",
+    "accentColor": "blue",
+    "fontSize": "medium"
+  },
+  "integrations": [
+    {
+      "id": 1,
+      "name": "Microsoft 365",
+      "description": "Calendar, Email, OneDrive",
+      "icon": "microsoft",
+      "connected": true
+    },
+    {
+      "id": 2,
+      "name": "Google Workspace",
+      "description": "Gmail, Google Calendar, Drive",
+      "icon": "google",
+      "connected": false
+    },
+    {
+      "id": 3,
+      "name": "Slack",
+      "description": "Team messaging, notifications",
+      "icon": "slack",
+      "connected": true
+    },
+    {
+      "id": 4,
+      "name": "Payment Gateway",
+      "description": "Stripe integration for payments",
+      "icon": "credit_card",
+      "connected": true
+    },
+    {
+      "id": 5,
+      "name": "VoIP System",
+      "description": "Call tracking and recording",
+      "icon": "phone",
+      "connected": false
+    }
+  ]
+} 

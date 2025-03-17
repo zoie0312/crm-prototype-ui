@@ -142,4 +142,132 @@ export interface DocumentsData {
   folders: Folder[];
   files: File[];
   breadcrumbs: Breadcrumb[];
+}
+
+// Reports data types
+export interface KeyMetric {
+  id: number;
+  value: string;
+  label: string;
+}
+
+export interface TopDeal {
+  id: number;
+  name: string;
+  customer: string;
+  value: string;
+  stage: string;
+  expectedClose: string;
+  assignedTo: string;
+}
+
+export interface SalesPerformance {
+  topDeals: TopDeal[];
+}
+
+export interface TopCustomer {
+  id: number;
+  name: string;
+  segment: string;
+  products: string;
+  lifetimeValue: string;
+  relationshipLength: string;
+  lastContact: string;
+}
+
+export interface CustomerAnalytics {
+  topCustomers: TopCustomer[];
+}
+
+export interface TeamMember {
+  id: number;
+  name: string;
+  revenueGenerated: string;
+  opportunitiesClosed: number;
+  conversionRate: string;
+  avgDealSize: string;
+  inPipeline: number;
+}
+
+export interface TeamPerformance {
+  teamMembers: TeamMember[];
+}
+
+// Reports data structure
+export interface ReportsData {
+  keyMetrics: KeyMetric[];
+  salesPerformance: SalesPerformance;
+  customerAnalytics: CustomerAnalytics;
+  teamPerformance: TeamPerformance;
+}
+
+// Settings data types
+export interface UserProfile {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  jobTitle: string;
+  department: string;
+  bio: string;
+  avatar: string;
+}
+
+export interface Session {
+  id: number;
+  device: string;
+  location: string;
+  status: string;
+  lastActive: string;
+}
+
+export interface SecuritySettings {
+  twoFactorEnabled: boolean;
+  sessions: Session[];
+}
+
+export interface EmailNotifications {
+  newCustomerAssignments: boolean;
+  taskReminders: boolean;
+  meetingReminders: boolean;
+  dealStatusUpdates: boolean;
+  weeklyReports: boolean;
+  monthlyReports: boolean;
+}
+
+export interface InAppNotifications {
+  chatMessages: boolean;
+  newAssignments: boolean;
+  taskUpdates: boolean;
+  meetingReminders: boolean;
+  dealStatusChanges: boolean;
+  systemUpdates: boolean;
+}
+
+export interface NotificationSettings {
+  email: EmailNotifications;
+  inApp: InAppNotifications;
+}
+
+export interface AppearanceSettings {
+  theme: 'light' | 'dark' | 'system';
+  accentColor: 'blue' | 'green' | 'purple' | 'red';
+  fontSize: 'small' | 'medium' | 'large';
+}
+
+export interface Integration {
+  id: number;
+  name: string;
+  description: string;
+  icon: string;
+  connected: boolean;
+}
+
+// Settings data structure
+export interface SettingsData {
+  profile: UserProfile;
+  security: SecuritySettings;
+  notifications: NotificationSettings;
+  appearance: AppearanceSettings;
+  integrations: Integration[];
 } 

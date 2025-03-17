@@ -1,0 +1,171 @@
+{
+  "keyMetrics": [
+    {
+      "id": 1,
+      "value": "$4.2M",
+      "label": "Pipeline Value"
+    },
+    {
+      "id": 2,
+      "value": "42",
+      "label": "Active Opportunities"
+    },
+    {
+      "id": 3,
+      "value": "28",
+      "label": "New Customers"
+    },
+    {
+      "id": 4,
+      "value": "76%",
+      "label": "Conversion Rate"
+    }
+  ],
+  "salesPerformance": {
+    "topDeals": [
+      {
+        "id": 1,
+        "name": "Commercial Real Estate Loan",
+        "customer": "David Brown",
+        "value": "$850,000",
+        "stage": "Negotiation",
+        "expectedClose": "May 30, 2023",
+        "assignedTo": "Sarah Johnson"
+      },
+      {
+        "id": 2,
+        "name": "Investment Property Mortgage",
+        "customer": "James Wilson",
+        "value": "$750,000",
+        "stage": "Closing",
+        "expectedClose": "May 25, 2023",
+        "assignedTo": "Michael Roberts"
+      },
+      {
+        "id": 3,
+        "name": "Trust Services",
+        "customer": "James Wilson",
+        "value": "$500,000",
+        "stage": "Negotiation",
+        "expectedClose": "June 15, 2023",
+        "assignedTo": "Jennifer Thompson"
+      },
+      {
+        "id": 4,
+        "name": "Retirement Planning",
+        "customer": "James Wilson",
+        "value": "$250,000",
+        "stage": "Qualified",
+        "expectedClose": "July 5, 2023",
+        "assignedTo": "Sarah Johnson"
+      },
+      {
+        "id": 5,
+        "name": "Investment Portfolio Rebalance",
+        "customer": "Emily Chen",
+        "value": "$150,000",
+        "stage": "Proposal",
+        "expectedClose": "June 10, 2023",
+        "assignedTo": "Jennifer Thompson"
+      }
+    ]
+  },
+  "customerAnalytics": {
+    "topCustomers": [
+      {
+        "id": 1,
+        "name": "James Wilson",
+        "segment": "High Net Worth",
+        "products": "Mortgage, Investments, Trust",
+        "lifetimeValue": "$1,250,000",
+        "relationshipLength": "7 years",
+        "lastContact": "Yesterday"
+      },
+      {
+        "id": 2,
+        "name": "Emily Chen",
+        "segment": "High Net Worth",
+        "products": "Checking, Savings, Investments",
+        "lifetimeValue": "$980,000",
+        "relationshipLength": "5 years",
+        "lastContact": "3 days ago"
+      },
+      {
+        "id": 3,
+        "name": "David Brown",
+        "segment": "Small Business",
+        "products": "Business Loan, Checking",
+        "lifetimeValue": "$850,000",
+        "relationshipLength": "3 years",
+        "lastContact": "1 week ago"
+      },
+      {
+        "id": 4,
+        "name": "Michael Rodriguez",
+        "segment": "Small Business",
+        "products": "Business Loan, Line of Credit",
+        "lifetimeValue": "$625,000",
+        "relationshipLength": "2 years",
+        "lastContact": "2 days ago"
+      },
+      {
+        "id": 5,
+        "name": "Robert Smith",
+        "segment": "Small Business",
+        "products": "Checking, Business Loan",
+        "lifetimeValue": "$425,000",
+        "relationshipLength": "2 months",
+        "lastContact": "Yesterday"
+      }
+    ]
+  },
+  "teamPerformance": {
+    "teamMembers": [
+      {
+        "id": 1,
+        "name": "Sarah Johnson",
+        "revenueGenerated": "$1,250,000",
+        "opportunitiesClosed": 24,
+        "conversionRate": "78%",
+        "avgDealSize": "$52,083",
+        "inPipeline": 15
+      },
+      {
+        "id": 2,
+        "name": "Michael Roberts",
+        "revenueGenerated": "$980,000",
+        "opportunitiesClosed": 18,
+        "conversionRate": "72%",
+        "avgDealSize": "$54,444",
+        "inPipeline": 12
+      },
+      {
+        "id": 3,
+        "name": "Jennifer Thompson",
+        "revenueGenerated": "$850,000",
+        "opportunitiesClosed": 22,
+        "conversionRate": "68%",
+        "avgDealSize": "$38,636",
+        "inPipeline": 16
+      },
+      {
+        "id": 4,
+        "name": "David Miller",
+        "revenueGenerated": "$755,000",
+        "opportunitiesClosed": 20,
+        "conversionRate": "80%",
+        "avgDealSize": "$37,750",
+        "inPipeline": 8
+      },
+      {
+        "id": 5,
+        "name": "Emily Rodriguez",
+        "revenueGenerated": "$645,000",
+        "opportunitiesClosed": 15,
+        "conversionRate": "65%",
+        "avgDealSize": "$43,000",
+        "inPipeline": 14
+      }
+    ]
+  }
+} 
