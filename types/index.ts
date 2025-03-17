@@ -114,4 +114,32 @@ export interface CalendarData {
   calendarDays: CalendarDay[];
   tasks: Task[];
   upcomingMeetings: Meeting[];
+}
+
+// Documents data types
+export interface Folder {
+  id: number;
+  name: string;
+  fileCount: number;
+}
+
+export interface File {
+  id: number;
+  name: string;
+  type: 'pdf' | 'docx' | 'xlsx' | 'image' | string;
+  modified: string;
+  size: string;
+}
+
+export interface Breadcrumb {
+  id: number;
+  name: string;
+  path: string;
+}
+
+// Documents data structure
+export interface DocumentsData {
+  folders: Folder[];
+  files: File[];
+  breadcrumbs: Breadcrumb[];
 } 
